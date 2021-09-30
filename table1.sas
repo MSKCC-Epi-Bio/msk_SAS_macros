@@ -77,7 +77,7 @@ optional with defaults (variables can be left out of macro statement and macro w
 			  	include_miss=1,order=freq,comboformat=1,
 				contcount=1,contstat=1,
 			  	view=,nameformat=,deletedat=1)
-				/store source;
+				;
 %put "NOTE: variables in data must be numeric and require a format applied (rowvarformat) in order to show text in table" ;
 /*indicator if grouping variable had been included*/
 %if %length(&groupvar) = 0 %then %do;
