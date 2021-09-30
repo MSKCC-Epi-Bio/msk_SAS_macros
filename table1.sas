@@ -3,6 +3,8 @@
 Macro for the creation of table 1 for either continuous and categorical data and the option to include a
 grouping/stratification variable
 1/25/19: right now, only non-parametric tests included
+9/30/2021: update macro for github, add deletedat option
+
 Unless specified with internal order, the macro always puts Unknown/NA at bottom, and No/Negative below other values
 automatically includes sample size at the top of the table if it doesn't yet exist 
 
@@ -61,14 +63,20 @@ optional with defaults (variables can be left out of macro statement and macro w
 				   
 	nameformat	 = give variable format name for dataset
 				   default is blank (no format)
+	deletedat    = for troubleshooting, whether or not you want to delete or keep working datasets
+					0: keep working datasets
+					1: delete working datasets
+					default is 1 
 				   
 
 ***********************/
+
+
 %macro table1(data=,rowvar=,rowvartype=,rowvarformat=,tablename=,
 				groupvar=,groupvarformat=,grouppercent=1,test=0,
 			  	include_miss=1,order=freq,comboformat=1,
 				contcount=1,contstat=1,
-			  	view=,nameformat=)
+			  	view=,nameformat=,deletedat=1)
 				/store source;
 %put "NOTE: variables in data must be numeric and require a format applied (rowvarformat) in order to show text in table" ;
 /*indicator if grouping variable had been included*/
@@ -129,10 +137,12 @@ optional with defaults (variables can be left out of macro statement and macro w
 		%end;
 		%ELSE %DO;
 			proc append base=table1_combined data=samplesize_v2 force nowarn; run;
-		%end;		
-		proc datasets nolist;
-		delete samplesize_v1 samplesize_v2;
-		run; quit;
+		%end;	
+		%if &deletedat=1 %then %do;	
+			proc datasets nolist;
+			delete samplesize_v1 samplesize_v2;
+			run; quit;
+		%end;
 	%end;
 	
 	/*if variable is count or categorical variable*/
@@ -191,9 +201,11 @@ optional with defaults (variables can be left out of macro statement and macro w
 			options varlenchk=nowarn;
 			proc append base=table1_combined data=cat_sumstat_v2 force nowarn; run;
 		%end;
+		%if &deletedat=1 %then %do;
 		proc datasets library=work nolist;
 		 delete cat_sumstat_v1 cat_sumstat_v2;
 		run;quit;
+		%end;
 	%end;
 	%if &rowvartype=2 %then %do;
 		proc means data=&data n median min max q1 q3 mean std;
@@ -367,9 +379,11 @@ optional with defaults (variables can be left out of macro statement and macro w
 			options varlenchk=nowarn;
 			proc append base=table1_combined data=cont_sumstat_v2 force nowarn; run;
 		%end;
+		%if &deletedat=1 %then %do;
 		proc datasets library=work nolist;
 		 delete cont_sumstat_v1 cont_sumstat_v2;
 		run;quit;
+		%end;
 	%end;
 	%if &view=1 and %length(&tablename)>0 %then %do;
 		%if %length(&nameformat)>0 %then %do;
@@ -413,8 +427,10 @@ optional with defaults (variables can be left out of macro statement and macro w
 			proc format;
 			value $varlabelf &varlabel;
 			run;
+			%if &deletedat=1 %then %do;
 			proc datasets library = work nolist;
 			delete tmp_label tmp_label2; run; quit;
+			%end;
 			proc report data=&tablename headline  missing;
 			column rowvar_name rowvar_value (combo dummyvar) ;
 			define rowvar_name/group order=data '' format=$varlabelf.;
@@ -470,8 +486,10 @@ optional with defaults (variables can be left out of macro statement and macro w
 			proc format;
 			value $varlabelf &varlabel;
 			run;
+			%if &deletedat=1 %then %do;
 			proc datasets library = work nolist;
 			delete tmp_label tmp_label2; run; quit;
+			%end;
 			proc report data=table1_combined headline  missing;
 			column rowvar_name rowvar_value (combo dummyvar) ;
 			define rowvar_name/group order=data '' format=$varlabelf.;
@@ -541,10 +559,12 @@ optional with defaults (variables can be left out of macro statement and macro w
 		%ELSE %DO;
 			proc append base=table1_combined data=total_samplesize_v2 force nowarn; run;
 			proc append base=table1_combined data=samplesize_v2 force nowarn; run;
-		%end;		
+		%end;	
+		%if &deletedat=1 %then %do;	
 		proc datasets nolist;
 		delete samplesize_v1 samplesize_v2 total_samplesize_v1 total_samplesize_v2;
 		run; quit;
+		%end;
 	%end;
 
 	%if &rowvartype = 1 %then %do;
@@ -710,9 +730,11 @@ optional with defaults (variables can be left out of macro statement and macro w
 			%ELSE %DO;
 				proc append base=table1_combined data=cat_merge_v1 force nowarn; run;
 			%end;
+			%if &deletedat=1 %then %do;
 			proc datasets library=work nolist;
 			 delete cat_sumstat_v1 cat_sumstat_v2 cat_sumstat_v3 cat_merge_v1 exacttest_v1 exacttest_v2;
 			run; quit;
+			%end;
 		%end;	
 		%if &test = 0 %then %do;
 			%if &include_miss = 1 %then %do;
@@ -859,9 +881,11 @@ optional with defaults (variables can be left out of macro statement and macro w
 			%ELSE %DO;
 				proc append base=table1_combined data=cat_sumstat_v3 force nowarn; run;
 			%end;
+			%if &deletedat=1 %then %do;
 			proc datasets library=work nolist;
 			 delete cat_sumstat_v1 cat_sumstat_v2 cat_sumstat_v3;
 			run; quit;
+			%end;
 		%end;
 	%end;
 	%if &rowvartype=2 %then %do;
@@ -1170,10 +1194,12 @@ optional with defaults (variables can be left out of macro statement and macro w
 			%ELSE %DO;
 				proc append base=table1_combined data=cont_merge_v1 force nowarn; run;
 			%end;
+			%if &deletedat=1 %then %do;
 			proc datasets library=work nolist;
 			 delete cont_sumstat_v1 cont_sumstat_v2 cont_sumstat_v3 wilcoxontest_v1 wilcoxontest_v2 cont_merge_v1
 					cont_sumstat_all_v1 cont_sumstat_all_v2;
 			run;quit;
+			%end;
 		%end;
 		%else %if &test = 0 %then %do;
 			%IF %length(&tablename)>0 %THEN %DO;
@@ -1182,9 +1208,11 @@ optional with defaults (variables can be left out of macro statement and macro w
 			%ELSE %DO;
 				proc append base=table1_combined data=cont_sumstat_v3 force nowarn; run;
 			%end;
-			proc datasets library=work nolist;
-			 delete cont_sumstat_v1 cont_sumstat_v2 cont_sumstat_v3 cont_sumstat_all_v1 cont_sumstat_all_v2;
-			run;quit;
+			%if &deletedat=1 %then %do;
+				proc datasets library=work nolist;
+				 delete cont_sumstat_v1 cont_sumstat_v2 cont_sumstat_v3 cont_sumstat_all_v1 cont_sumstat_all_v2;
+				run;quit;
+			%end;
 		%end;
 	%end;
 	%if &view=1 %then %do;
@@ -1255,8 +1283,10 @@ optional with defaults (variables can be left out of macro statement and macro w
 					proc format;
 					value $varlabelf &varlabel;
 					run;
+					%if &deletedat=1 %then %do;
 					proc datasets library = work nolist;
 					delete tmp_label tmp_label2; run; quit;
+					%end;
 					proc report data=&tablename headline nowindows missing;
 					column rowvar_name rowvar_value groupvar_value,combo ("p-value" pvalue dummyvar) ;
 					define rowvar_name/group order=data '' format=$varlabelf;
@@ -1349,8 +1379,10 @@ optional with defaults (variables can be left out of macro statement and macro w
 					proc format;
 					value $varlabelf &varlabel;
 					run;
+					%if &deletedat=1 %then %do;
 					proc datasets library = work nolist;
 					delete tmp_label tmp_label2; run; quit;
+					%end;
 					proc report data=&tablename headline nowindows missing;
 					column rowvar_name rowvar_value groupvar_value,combo (dummyvar) ;
 					define rowvar_name/group order=data '' format=$varlabelf.;
@@ -1408,8 +1440,10 @@ optional with defaults (variables can be left out of macro statement and macro w
 					proc format;
 					value $varlabelf &varlabel;
 					run;
+					%if &deletedat=1 %then %do;
 					proc datasets library = work nolist;
 					delete tmp_label tmp_label2; run; quit;
+					%end;
 					proc report data=table1_combined headline nowindows missing;
 					column rowvar_name rowvar_value groupvar_value,combo (pvalue dummyvar) ;
 					define rowvar_name/group order=data '' format=$varlabelf.;
