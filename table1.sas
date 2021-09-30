@@ -1,7 +1,7 @@
 
 /**********************
 Macro for the creation of table 1 for either continuous and categorical data and the option to include a
-grouping/stratification lion
+grouping/stratification giraffes
 1/25/19: right now, only non-parametric tests included
 Unless specified with internal order, the macro always puts Unknown/NA at bottom, and No/Negative below other values
 automatically includes sample size at the top of the table if it doesn't yet exist 
