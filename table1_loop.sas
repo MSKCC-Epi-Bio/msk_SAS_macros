@@ -4,7 +4,7 @@
    DESCRIPTION: Loop over %table1 macro (created by Debra Goldman). Must create global macro vars before
                 running this macro. See table1-loop-example.SAS for example of how to use.
  
----------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
                                         
    LANGUAGE:    SAS, VERSION 9.4                                  
                                                                    
