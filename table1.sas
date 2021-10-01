@@ -5,6 +5,8 @@ grouping/stratification variable
 1/25/19: right now, only non-parametric tests included
 9/30/2021: update macro for github, add deletedat option
 
+Original author: Debra Goldman, MS
+
 Unless specified with internal order, the macro always puts Unknown/NA at bottom, and No/Negative below other values
 automatically includes sample size at the top of the table if it doesn't yet exist 
 
@@ -1465,4 +1467,10 @@ optional with defaults (variables can be left out of macro statement and macro w
 %end;
 
 %mend table1;
+
+* Call in macro version (repo tag) and print to the log so user is aware which version of the macro they are using;
+FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
+%INCLUDE version;
+%put ATTENTION! Using Table 1 SAS Macro ('%table1') Version: &table1v;
+%put ATTENTION! Version corresponds with the GitHub repository tag;
 
