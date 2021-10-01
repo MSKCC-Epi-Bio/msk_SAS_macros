@@ -13,17 +13,27 @@
                                                                    
 ****************************************************************************************************************;
 
-%macro loop_table1(ds =, 
+* Call in macro version (repo tag). Will print to the log so user is aware which version of the macro they are using
+  each time the macro is called;
+FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
+%INCLUDE version;
+
+%macro table1_loop(ds =, 
 				   rowvarlist =, 
                    rowvarfmtlist =, 
                    typelist =, 
+				   comboformat_set = 1,
                    tablename_set =,
+				   order_set = internal,
                    groupvar_set =, 
-                   include_missing_set =0, 
                    groupvarfmt_set =, 
+                   groupvarfmt_set = 1,
+                   testlist =,
+                   test_set = 0,
+                   include_missing_set = 0, 
+                   contcount_set = 1,
                    contstat_set = 1,
-				   nameformat_set = $varname., 
-                   testlist =);
+				   nameformat_set =);
 
 * Create table shell to store results before iterations begin;
 %IF %length(&tablename_set)>0 %THEN %DO;
@@ -105,23 +115,33 @@ run;
 		    	tablename = &tablename_set, 
 			%end;
 			%if %length(&tablename_set)=0 %then %do;
-		    	tablename = table1_combined, 
+		    	tablename = table1_combined, /* default from %table1 macro */
 			%end;
 			include_miss = &include_missing_set,
-		    comboformat = 1,
+		    comboformat = &comboformat_set,
+			contcount = &contcount_set,
 			contstat = &contstat_set,
-			order = internal,
+			order = &order_set,
 			%if %length(&groupvar) > 0 %then %do;
 			    groupvar = &groupvar_set,
 	            groupvarformat = &groupvarfmt_set,
+				grouppercent = &grouppercent_set,
             	%if %length(&testlist) > 0 %then %do; 
 					test = %scan(&testlist, &i, " "), 
 				%end;
+				%if %length(&testlist) = 0 %then %do;
+					test = &test_set,
+				%end;
 			%end;
-		    nameformat = &nameformat_set);
+		    nameformat = &nameformat_set,
+			deletedat = 1);
 %end;
-%mend loop_table1;
 
+* Print macro version (repo tag) to the log so user is aware which version of the macro they are using;
+%put ATTENTION! Using Table 1 Loop SAS Macro ('%table1_loop') Version: &table1_loopv;
+%put ATTENTION! Version corresponds with the GitHub repository tag;
+
+%mend table1_loop;
 
 
 
