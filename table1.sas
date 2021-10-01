@@ -16,6 +16,8 @@ parameters:
 				      note: can also use formats such as 5.0 for count data or $ formats for categorical data
 					  numeric can be set to percentn, integer, decimal etc.
 optional but recommended to list (variables can be left out of macro statement and macro will still run):
+	createdata		= set to 1 in first call of table1 macro in order to create dataset to save information to
+					  default is 0
 	table_name		= provide table name from create table1 macro above. If not provided, defaults to table1_combined
 					  as in create table name macro 
 	groupvar 		= grouping variable. If blank, it runs single column. If variable listed, it will provide an overall
@@ -72,13 +74,80 @@ optional with defaults (variables can be left out of macro statement and macro w
 ***********************/
 
 
-%macro table1(data=,rowvar=,rowvartype=,rowvarformat=,tablename=,
+%macro table1(createdata=0,data=,rowvar=,rowvartype=,rowvarformat=,tablename=,
 				groupvar=,groupvarformat=,grouppercent=1,test=0,
 			  	include_miss=1,order=freq,comboformat=1,
 				contcount=1,contstat=1,
 			  	view=,nameformat=,deletedat=1)
 				;
 %put "NOTE: variables in data must be numeric and require a format applied (rowvarformat) in order to show text in table" ;
+/*create shell data set*/
+%IF createdata=1 %THEN %DO;
+	%IF %length(&tablename)>0 %THEN %DO;
+		data &tablename;
+			length rowvar_value $ 50;
+			length rowvar_name $ 50;
+			length groupvar_value $ 50;
+			length groupvar_name $ 50;
+			length combo $ 50;
+			length range $ 30;
+			length iqr $ 30; 
+			length mean $ 30;
+			length median $ 30;
+			frequency=.;
+			percent=.;
+			colpercent=.;
+			rowpercent=.;
+			rowvar_value="";
+			rowvar_name="";
+			groupvar_value="";
+			groupvar_name="";
+			combo="";
+			total=.;
+			median="";
+			mean = "" ;
+			std = . ; 
+			range = ""; 
+			iqr = "";
+			pvalue=.;
+			rowvar_type=.;
+			rowvar_raw = . ; 
+			groupvar_raw = . ; 
+		run;
+	%END;
+	%ELSE %DO;
+		data table1_combined;
+			length rowvar_value $ 50;
+			length rowvar_name $ 50;
+			length groupvar_value $ 50;
+			length groupvar_name $ 50;
+			length combo $ 50;
+			length range $ 30;
+			length iqr $ 30; 
+			length mean $ 30;
+			length median $ 30;
+			frequency=.;
+			percent=.;
+			colpercent=.;
+			rowpercent=.;
+			rowvar_value="";
+			rowvar_name="";
+			groupvar_value="";
+			groupvar_name="";
+			combo="";
+			total=.;
+			median="";
+			mean = "" ;
+			std = . ; 
+			range = ""; 
+			iqr = "";
+			pvalue=.;
+			rowvar_type = .;
+			rowvar_raw = . ; 
+			groupvar_raw = . ;
+		run;
+	%END;
+%END;
 /*indicator if grouping variable had been included*/
 %if %length(&groupvar) = 0 %then %do;
 /*	create a dummy format or use 5.0 if no format was provided*/
