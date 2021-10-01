@@ -72,7 +72,6 @@ optional with defaults (variables can be left out of macro statement and macro w
 					1: delete working datasets
 					default is 1 
 				   
-
 ***********************/
 
 * Call in macro version (repo tag). Will print to the log so user is aware which version of the macro they are using
