@@ -80,7 +80,8 @@ optional with defaults (variables can be left out of macro statement and macro w
 FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
 %INCLUDE version;
 
-%macro table1(data=,
+%macro table1(createdata=0,
+			  data=,
 			  rowvar=,
 			  rowvartype=,
 			  rowvarformat=,
