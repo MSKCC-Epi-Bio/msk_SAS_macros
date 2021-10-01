@@ -73,7 +73,6 @@ optional with defaults (variables can be left out of macro statement and macro w
 
 ***********************/
 
-
 %macro table1(createdata=0,data=,rowvar=,rowvartype=,rowvarformat=,tablename=,
 				groupvar=,groupvarformat=,grouppercent=1,test=0,
 			  	include_miss=1,order=freq,comboformat=1,
@@ -82,7 +81,7 @@ optional with defaults (variables can be left out of macro statement and macro w
 				;
 %put "NOTE: variables in data must be numeric and require a format applied (rowvarformat) in order to show text in table" ;
 /*create shell data set*/
-%IF createdata=1 %THEN %DO;
+%IF &createdata=1 %THEN %DO;
 	%IF %length(&tablename)>0 %THEN %DO;
 		data &tablename;
 			length rowvar_value $ 50;
@@ -148,6 +147,7 @@ optional with defaults (variables can be left out of macro statement and macro w
 		run;
 	%END;
 %END;
+
 /*indicator if grouping variable had been included*/
 %if %length(&groupvar) = 0 %then %do;
 /*	create a dummy format or use 5.0 if no format was provided*/
