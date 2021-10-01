@@ -27,7 +27,7 @@ FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_
 				   order_set = internal,
                    groupvar_set =, 
                    groupvarfmt_set =, 
-                   groupvarfmt_set = 1,
+                   grouppercent_set = 1,
                    testlist =,
                    test_set = 0,
                    include_missing_set = 0, 
