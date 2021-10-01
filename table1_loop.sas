@@ -18,7 +18,7 @@
 FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
 %INCLUDE version;
 
-%macro loop_table1(ds =, 
+%macro table1_loop(ds =, 
 				   rowvarlist =, 
                    rowvarfmtlist =, 
                    typelist =, 
@@ -141,7 +141,7 @@ run;
 %put ATTENTION! Using Table 1 Loop SAS Macro ('%table1_loop') Version: &table1_loopv;
 %put ATTENTION! Version corresponds with the GitHub repository tag;
 
-%mend loop_table1;
+%mend table1_loop;
 
 
 
