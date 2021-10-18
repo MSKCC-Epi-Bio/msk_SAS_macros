@@ -26,8 +26,7 @@ In order to use this macro, variables must be numeric; to print items that are c
 | -------------- |:-------------:| :---------:|
 | DATA	         |The name of the data set to be analyzed. |	Yes 
 | ROWVARTYPE 	   |1: categorical stats; 2: continuous summary stats	| Yes 
-| ROWVARFORMAT 	 |format of variable. both numeric and character formats will work. note: can also use formats such as 5.0 for count data or $ formats for categorical data
-numeric can be set to percentn, integer, decimal etc.	| Yes 
+| ROWVARFORMAT 	 |format of variable. both numeric and character formats will work. note: can also use formats such as 5.0 for count data or $ formats for categorical data numeric can be set to percentn, integer, decimal etc.	| Yes 
 | CREATEDATA	   |set to 1 in first call of table1 macro to create dataset to save information to (not necessary if you already have a shell dataset created outside of macro call) default is 0	| No but recommended 
 | TABLE_NAME 	   | provide table name from create table1 macro above. If not provided, defaults to table1_combined	| No but recommended 
 | GROUPVAR 	     | grouping variable. If blank, it runs single column. If variable listed, it will provide an overall and values stratified by this grouping variable. default is to provide columnar proportion (see below)	| No but recommended 
@@ -39,8 +38,36 @@ numeric can be set to percentn, integer, decimal etc.	| Yes
 | CONTSTAT	     | 1 for median and range in combined var; 2 for median and  IQR in combined variable 3 for mean and SD default is 1 (use median and  range) or anything other than 0 will produce the range note that all stats are included in output dataset. this simply refers to combined presentation |	No
 | ORDER          |	order of categorical variable output freq for descending frequency; internal for unformatted; external for formatted order data for data order default is freq (order by descending frequency)	| No 
 | COMBOFORMAT    |	format of combined variable. applies to categorical variables 1: percent to 1 decimal and 2 spaces between freq and pct; 2: percent to integer with % sign with 2 spaces between freq and pct; 3: percent to 1 decimal with % sign with 2 spaces betweens freq and pct; 4: percent to 1 decimal with one space between freq and pct default is 1 ( N  (PCT.1))	| No 
-| VIEW           | 	output of table
-1: output table; 0 or any other value, no table
-default is blank |	No
+| VIEW           | 	output of table 1: output table; 0 or any other value, no table default is blank |	No
 | NAMEFORMAT     |	give variable format name for dataset; default is blank (no format) |	No
 | DELETEDAT      |	  for troubleshooting, whether or not you want to delete or keep working datasets (default=1) 0= keep working datasets; 1= delete working datasets	| No
+
+
+
+
+## Usage Example:
+```{sas}
+FILENAME utility URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/utility.sas";
+%INCLUDE utility;
+*read in data;
+libname test "G:\Macros\Testing\";
+
+data d1;
+	set test.sample_data;
+run;
+proc contents data=d1;
+run;
+proc print data=d1 (obs=20);
+run;
+*create formats for data;
+proc format;
+	value marf 1="Yes"
+				0="No";
+	value hivposf 0="No"
+				 1="Yes";
+run;
+*use table1 macro;
+%table1(createdata=1,data=d1,rowvar=married,rowvartype=1,rowvarformat=marf.);
+%table1(createdata=0,data=d1,rowvar=hivpos_n,rowvartype=1,rowvarformat=hivposf.);
+
+```
