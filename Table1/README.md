@@ -1,10 +1,10 @@
 # Documentation: table1 SAS Macro
-### Macro Name: TABLE1 
-### Created Date/Author: October. 2021/Hannah Kalvin & Stephanie Lobaugh 
-### Last Update Date/Person: Oct 1, 2021/Hannah Kalvin & Stephanie Lobaugh 
-### Other Contributors: Debra Goldman (original author)
-### Current Version (reflected in tag on github): table1_v1.0
-### Working Environment: SAS 9.4 
+#### Macro Name: TABLE1 
+#### Created Date/Author: October. 2021/Hannah Kalvin & Stephanie Lobaugh 
+#### Last Update Date/Person: Oct 1, 2021/Hannah Kalvin & Stephanie Lobaugh 
+#### Other Contributors: Debra Goldman (original author)
+#### Current Version (reflected in tag on github): table1_v1.0
+#### Working Environment: SAS 9.4 
 
 
 ## Contact 
