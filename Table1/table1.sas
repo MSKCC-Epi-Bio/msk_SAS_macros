@@ -76,7 +76,7 @@ optional with defaults (variables can be left out of macro statement and macro w
 
 * Call in macro version (repo tag). Will print to the log so user is aware which version of the macro they are using
   each time the macro is called;
-FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
+FILENAME version URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk_SAS_project/main/version.sas";
 %INCLUDE version;
 
 %macro table1(createdata=0,
