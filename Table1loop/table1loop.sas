@@ -15,7 +15,7 @@
 
 * Call in macro version (repo tag). Will print to the log so user is aware which version of the macro they are using
   each time the macro is called;
-FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
+FILENAME version URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk_SAS_project/main/version.sas";
 %INCLUDE version;
 
 %macro table1_loop(ds =, 
@@ -138,7 +138,7 @@ run;
 %end;
 
 * Print macro version (repo tag) to the log so user is aware which version of the macro they are using;
-%put ATTENTION! Using Table 1 Loop SAS Macro ('%table1_loop') Version: &table1_loopv;
+%put ATTENTION! Using Table 1 Loop SAS Macro ('%table1_loop') Version: &version;
 %put ATTENTION! Version corresponds with the GitHub repository tag;
 
 %mend table1_loop;
