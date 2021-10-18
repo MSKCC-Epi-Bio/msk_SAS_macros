@@ -9,6 +9,8 @@
 
 ## Contact 
 Hannah Kalvin kalvinh@mskcc.org 
+
+
 Stephanie Lobaugh lobaughs@mskcc.org 
 
 
@@ -18,4 +20,6 @@ To produce a descriptive statistics summary table for each variable in the datas
 
 ## Notes: 
 In order to use this macro, variables must be numeric; to print items that are character, create format that can be applied in table1 macro call. Nonparametric testing is the default. If you would like to not call each variable individually, see table1_loop macro documentation.
-Parameters:
+
+
+## Parameters:
