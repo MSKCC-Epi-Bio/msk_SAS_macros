@@ -1,8 +1,8 @@
 # Documentation: table1 SAS Macro
 #### Macro Name: TABLE1 
-#### Created Date/Author: October. 2021/Hannah Kalvin & Stephanie Lobaugh 
+#### Created Date/Author: January 2019/Debra Goldman (GitHub username: [dgstat](https://github.com/DGStat/))
 #### Last Update Date/Person: Oct 1, 2021/Hannah Kalvin & Stephanie Lobaugh 
-#### Other Contributors: Debra Goldman (original author)
+#### Other Contributors: Hannah Kalvin, Stephanie Lobaugh 
 #### Working Environment: SAS 9.4 
 
 
