@@ -1552,8 +1552,8 @@ FILENAME version URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk
 %end;
 
 * Print macro version (repo tag) to the log so user is aware which version of the macro they are using;
-%put ATTENTION! Using Table 1 SAS Macro ('%table1') Version: &version;
-%put ATTENTION! Version corresponds with the GitHub repository tag;
+%put "ATTENTION! Using Table 1 SAS Macro ('%table1') Version: &version";
+%put "ATTENTION! Version corresponds with the GitHub repository tag";
 
 %mend table1;
 
