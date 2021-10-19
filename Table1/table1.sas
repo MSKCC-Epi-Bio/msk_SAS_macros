@@ -79,6 +79,8 @@ optional with defaults (variables can be left out of macro statement and macro w
 FILENAME version URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk_SAS_project/main/version.sas";
 %INCLUDE version;
 
+%global version;
+
 %macro table1(createdata=0,
 			  data=,
 			  rowvar=,
@@ -98,7 +100,8 @@ FILENAME version URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk
 			  nameformat=,
 			  deletedat=1)
 			  ;
-%put "NOTE: variables in data must be numeric and require a format applied (rowvarformat) in order to show text in table" ;
+%put NOTE: variables in data must be numeric and require a format applied (rowvarformat) in order to show text in table ;
+%put NOTE: current version of table1 macro is &version.;
 /*create shell data set*/
 %IF &createdata=1 %THEN %DO;
 	%IF %length(&tablename)>0 %THEN %DO;
@@ -1552,8 +1555,8 @@ FILENAME version URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk
 %end;
 
 * Print macro version (repo tag) to the log so user is aware which version of the macro they are using;
-%put "ATTENTION! Using Table 1 SAS Macro ('%table1') Version: &version";
-%put "ATTENTION! Version corresponds with the GitHub repository tag";
+/*%put "ATTENTION! Using Table 1 SAS Macro ('%table1') Version: &version";*/
+/*%put "ATTENTION! Version corresponds with the GitHub repository tag";*/
 
 %mend table1;
 
