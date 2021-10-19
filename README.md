@@ -8,7 +8,7 @@ FILENAME mskm URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk_SA
 
 ## To load a specific MSK SAS macro or template  
 Run the following code in SAS (*Note that you must specify the specific version that you want to load)*:  
-%LET myfolder = Table1;
+%LET myfolder = Table1;  
 %LET mymacro = table1;  
 %LET myversion = v1.0;  
 FILENAME mv URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/msk_SAS_macros/&myversion./&myfolder./&mymacro..sas";  
