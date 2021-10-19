@@ -1,6 +1,6 @@
 # Documentation: Table1loop SAS Macro
 #### Macro Name: TABLE1LOOP
-#### Created Date/Author: Feb. 2021/Stephanie Lobaugh (Note: Debra Goldman is the author of the table1 macro that is called within the table1_loop macro)
+#### Created Date/Author: Feb. 2021/Stephanie Lobaugh (Note: Debra Goldman ([dgstat](https://github.com/DGStat/) on GitHub) is the author of the table1 macro that is called within the table1_loop macro)
 #### Last Update Date/Person: 2021-10-01/Stephanie Lobaugh
 #### Other Contributors: Hannah Kalvin
 #### Working Environment: SAS 9.4 English version
